@@ -1,5 +1,23 @@
 pipeline {
   agent any
+  
+   environment {
+
+        EMAIL_BODY = 
+
+        """
+
+            <p> Check subject to see project success or failure</p>
+
+        """
+
+        EMAIL_SUBJECT_SUCCESS = "Status: 'SUCCESS' " 
+
+        EMAIL_SUBJECT_FAILURE = "Status: 'FAILURE'" 
+
+        EMAIL_RECEPIENT = 'ramseywainaina90@gmail.com.com'
+
+    }
     
   tools {nodejs "node"}
     
@@ -38,4 +56,24 @@ pipeline {
     }
     
   }
+  
+     post {
+        success {
+            emailext attachLog: true, 
+                body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_SUCCESS,
+
+                to: EMAIL_RECEPIENT
+        }
+
+        failure {
+            emailext attachLog: true, 
+                body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_FAILURE, 
+
+                to: EMAIL_RECEPIENT
+        }
+    }
 }

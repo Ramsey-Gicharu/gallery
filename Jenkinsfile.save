@@ -1,0 +1,41 @@
+ipeline {
+  agent any
+    
+  tools {nodejs "node"}
+    
+  stages {
+        
+    stage("Cloning repository") {
+      steps {
+        git 'https://github.com/Ramsey-Gicharu/gallery.git'
+        echo "Cloning forked repostory"
+        
+      }
+    }
+     
+    stage('Build') {
+      steps {
+        sh 'npm install'
+        echo "BUILD"
+         
+      }
+    }  
+    
+    stage('TEST') {
+      steps {
+        sh 'npm run test'
+        echo "TEST"
+         
+      }
+    } 
+    
+    stage('DEPLOYMENT') {
+      steps {
+        slackSend message: "Link to render deployment: https://gallery-5n5f.onrender.com/"
+        echo "DEPLOYMENT LINK "
+         
+      }
+    }
+    
+  }
+}
